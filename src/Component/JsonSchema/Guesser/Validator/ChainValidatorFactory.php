@@ -8,7 +8,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class ChainValidatorFactory
 {
-    public static function create(Naming $naming, Registry $registry, SerializerInterface $denormalizer): ValidatorInterface
+    public static function create(Naming $naming, Registry $registry, SerializerInterface $denormalizer, bool $addSubObjectValidator = true): ValidatorInterface
     {
         $chainValidator = new ChainValidator();
         // Numeric
@@ -26,7 +26,9 @@ class ChainValidatorFactory
         $chainValidator->addValidator(new Array_\MinItemsValidator());
         $chainValidator->addValidator(new Array_\UniqueItemsValidator());
         // Object
-        $chainValidator->addValidator(new Object_\SubObjectValidator($naming, $registry, $denormalizer));
+        if ($addSubObjectValidator) {
+            $chainValidator->addValidator(new Object_\SubObjectValidator($naming, $registry, $denormalizer));
+        }
         $chainValidator->addValidator(new Object_\MaxPropertiesValidator());
         $chainValidator->addValidator(new Object_\MinPropertiesValidator());
         // Format

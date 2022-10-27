@@ -202,7 +202,7 @@ class ObjectGuesser implements GuesserInterface, PropertiesGuesserInterface, Typ
     private function initChainValidator(Registry $registry): void
     {
         if (null === $this->chainValidator) {
-            $this->chainValidator = ChainValidatorFactory::create($this->naming, $registry, $this->serializer);
+            $this->chainValidator = ChainValidatorFactory::create($this->naming, $registry, $this->serializer, false);
         }
     }
 }
