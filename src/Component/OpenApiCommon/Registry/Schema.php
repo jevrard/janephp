@@ -74,6 +74,13 @@ class Schema extends BaseSchema implements SchemaInterface
         $this->neededModels[] = $model;
     }
 
+    public function addRelationByReference(string $model, string $reference): void
+    {
+        if (null !== ($guessClass = $this->getClass($reference))) {
+            $this->addRelation($model, $guessClass->getName());
+        }
+    }
+
     public function relationExists($model): bool
     {
         return parent::relationExists($model) && \in_array($model, $this->neededModels);
